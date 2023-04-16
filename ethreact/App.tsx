@@ -10,6 +10,8 @@ import {
   StatusBar,
   Alert,
 } from 'react-native';
+import FlashMessage from "react-native-flash-message";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 
 const App = () => {
@@ -18,7 +20,7 @@ const App = () => {
   const [amount, setAmount] = useState('');
 
   const sendAmount = async () => {
-    fetch('http://localhost:3000/send', {
+    fetch('https://xpress-ho5u.onrender.com/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,6 +34,14 @@ const App = () => {
       .then(res => res.json())
       .then(async data => {
         console.log(data);
+        showMessage({
+          message: "Transcation Successful",
+          type: "info",
+        });
+        setAddress("");
+        setAmount("");
+        
+        
       })
       .catch(err => {
         console.log(err);
@@ -58,7 +68,6 @@ const App = () => {
         <TextInput
           placeholder="0.1 ether 10^17"
           style={styles.amount}
-          secureTextEntry={true}
           placeholderTextColor={'#9B9898'}
           value={amount}
           onChangeText={text => setAmount(text)}></TextInput>
@@ -76,6 +85,7 @@ const App = () => {
         <Text style={styles.txt2}>Designed and Developed By Gaurav Burande</Text>
       </View>
       <StatusBar backgroundColor="#1A1919" barStyle="light-content" />
+      <FlashMessage position="top" /> 
     </View>
   )
 }
