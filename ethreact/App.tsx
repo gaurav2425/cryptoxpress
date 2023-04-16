@@ -11,14 +11,6 @@ import {
   Alert,
 } from 'react-native';
 
-const Web3 = require("web3");
-const EthereumTx = require('ethereumjs-tx').Transaction;
-const axios = require('axios');
-const ethNetwork = 'https://rinkeby.infura.io/v3/your project id';
-const web3 = new Web3(new Web3.providers.HttpProvider(ethNetwork));
-
-
-
 
 const App = () => {
 
@@ -26,7 +18,7 @@ const App = () => {
   const [amount, setAmount] = useState('');
 
   const sendAmount = async () => {
-    fetch('http://13.232.252.51:5000/api/auth', {
+    fetch('http://localhost:3000/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,15 +49,15 @@ const App = () => {
         </View>
 
         <TextInput
-          placeholder="Email"
-          style={styles.email}
+          placeholder="0xAf37F5799D111c12149871b312Ca26A52a23a0D5"
+          style={styles.address}
           value={address}
           placeholderTextColor={'#9B9898'}
           onChangeText={text => setAddress(text)}></TextInput>
 
         <TextInput
-          placeholder="Amount"
-          style={styles.password}
+          placeholder="0.1 ether 10^17"
+          style={styles.amount}
           secureTextEntry={true}
           placeholderTextColor={'#9B9898'}
           value={amount}
@@ -132,7 +124,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F65F69',
   },
   
-  email: {
+  address: {
     backgroundColor: '#1A1919',
     width: P90,
     alignSelf: 'center',
@@ -147,7 +139,7 @@ const styles = StyleSheet.create({
     // borderColor: '#D9D3D3',
   },
 
-  password: {
+  amount: {
     backgroundColor: '#1A1919',
     width: P90,
     alignSelf: 'center',
