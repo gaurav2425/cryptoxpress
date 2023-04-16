@@ -11,7 +11,7 @@ var receiveraddress = "0xAf37F5799D111c12149871b312Ca26A52a23a0D5";
 var senderprivatekey =
   "30c712785c06faab07c19a40070654d47c50645aa25bc5c99f6ce1cc1cbc9a6f";
 
-const sendEther = async () => {
+const sendEther = async (address, amount) => {
   console.log("in function");
   var provider = new Provider(senderprivatekey, rpcurl);
   var web3 = new Web3(provider);
@@ -20,8 +20,8 @@ const sendEther = async () => {
   web3.eth
     .sendTransaction({
       from: senderaddress,
-      to: receiveraddress,
-      value: 10000000, // 0.1 ether 10^17
+      to: address,
+      value: amount, // 0.1 ether 10^17
     })
     .then(function (receipt) {
       console.log(receipt);
@@ -31,16 +31,15 @@ const sendEther = async () => {
     });
 };
 
-app.post("/send", async (req, res) => {
-  const { address, amount } = req.body;
-  //   await sendEther({ address, amount });
-  //   res.json(sendEther({ address, amount }));
-});
-
 app.get("/", (req, res) => {
   res.send("Working");
 });
 
-sendEther();
+app.post("/send", async (req, res) => {
+  const { address, amount } = req.body;
+  await sendEther({ address, amount });
+  res.json(sendEther({ address, amount }));
+});
+
 app.listen(port);
 console.log("listening on", port);
