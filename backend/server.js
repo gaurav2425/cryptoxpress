@@ -37,6 +37,10 @@ app.post("/send", async (req, res) => {
   //   res.json(sendEther({ address, amount }));
 });
 
+app.get("/", (req, res) => {
+  res.send("Working");
+});
+
 sendEther();
 app.listen(port);
 console.log("listening on", port);
